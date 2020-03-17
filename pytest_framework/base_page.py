@@ -1,3 +1,5 @@
+from selenium.webdriver.chrome.webdriver import WebDriver
+
 
 def exception_handle(fun):
     def magic(*args, **kwargs):
@@ -9,9 +11,12 @@ def exception_handle(fun):
 
 
 class BasePage(object):
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
 
     @exception_handle
     def find(self, by, value):
         return self.driver.find_element(by, value)
+
+    def close(self):
+        self.driver.quit()

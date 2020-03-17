@@ -1,3 +1,4 @@
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -25,4 +26,14 @@ class TestWeb:
 
     def test_search_by_po_alibaba(self):
         assert self.main_page.search('alibaba').get_name() == "阿里巴巴"
+
+    @pytest.mark.parametrize("keyword, name", [
+        ("pdd", "拼多多"),
+        ("jd", "京东")
+    ])
+    def test_search_by_po_dd(self, keyword, name):
+        assert self.main_page.search(keyword).get_name() == name
+
+    def teardown_method(self):
+        self.main_page.close()
 
